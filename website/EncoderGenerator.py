@@ -14,9 +14,15 @@ for path in pathList:
 def findEncodings(imagesList):
     encodeList = []
     for img in imagesList:
+        img = cv2.resize(img, (640, 480))
         img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-        encode = face_recognition.face_encodings(img)[0]
-        encodeList.append(encode)
+        print(img.shape)
+        encodings = face_recognition.face_encodings(img)
+        if encodings:
+            encode = encodings[0]
+            encodeList.append(encode)
+        else:
+            print("No face found in the image")
 
     return encodeList
 

@@ -2,6 +2,10 @@ const btnOpenCam = document.getElementById("btnOpenCam");
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
+const btnStopCam = document.getElementById("btnStopCam");
+const inpUsername = document.getElementById("inpUsername");
+const inpEmail = document.getElementById("inpEmail");
+const inpPhone = document.getElementById("inpPhone");
 
 let captureInterval;
 
@@ -30,16 +34,17 @@ async function captureAndProcessImage() {
       }
 
       const data = await response.json();
-      console.log(data.status);
+      console.log(data);
       if (data.status == 1) {
-        alert("Ban la " + data.name);
-
-        const img = new Image();
-        img.src = "data:image/jpeg;base64," + data.image;
-        img.onload = () => {
-          context.clearRect(0, 0, canvas.width, canvas.height);
-          context.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
+        // const img = new Image();
+        // img.src = "data:image/jpeg;base64," + data.image;
+        // img.onload = () => {
+        //   context.clearRect(0, 0, canvas.width, canvas.height);
+        //   context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        // };
+        inpUsername.value = data.username;
+        inpEmail.value = data.email;
+        inpPhone.value = data.phone;
       } else {
         console.log("Unknown");
       }
@@ -50,7 +55,7 @@ async function captureAndProcessImage() {
 }
 
 // Optionally, you can add a stop button to stop the capture
-const btnStopCam = document.getElementById("btnStopCam");
+
 btnStopCam.addEventListener("click", () => {
   clearInterval(captureInterval);
   if (video.srcObject) {
