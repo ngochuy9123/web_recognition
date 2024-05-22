@@ -15,12 +15,7 @@ from sklearn.metrics import pairwise
 
 
 process_img = Blueprint('process_img',__name__)
-# print("Loading Encode File ...")
-# file = open("website/EncodeFile.p","rb")
-# encodeListKnownWithIds = pickle.load(file)
-# file.close()
-# encodeListKnown,personIds = encodeListKnownWithIds
-# print("Encode File Loaded")
+
 
 folderModel = "indightface_models/"
 app_sc = FaceAnalysis(name='buffalo_sc', 

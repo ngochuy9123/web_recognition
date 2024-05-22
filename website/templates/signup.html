@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+<title>{% block title %}Sign Up{% endblock %}</title>
+{% block content %}
+<div class="main-wrap">
+  <div class="box-container">
+    <div class="img-box">
+      <video id="video" width="320" height="240" autoplay></video>
+
+      <canvas id="canvas" style="display: none"></canvas>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {%block script %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='signUp.js')}}"
+></script>
+{%endblock%}

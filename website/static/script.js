@@ -7,6 +7,8 @@ const inpUsername = document.getElementById("inpUsername");
 const inpEmail = document.getElementById("inpEmail");
 const inpPhone = document.getElementById("inpPhone");
 
+console.log("This Is Script.js");
+
 let captureInterval;
 
 btnOpenCam.addEventListener("click", async () => {
