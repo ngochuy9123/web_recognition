@@ -1,16 +1,41 @@
 {% extends 'base.html' %}
 <title>{% block title %}Sign Up{% endblock %}</title>
 {% block content %}
+
 <div class="main-wrap">
   <div class="box-container">
-    <div class="img-box">
-      <video id="video" width="320" height="240" autoplay></video>
-
-      <canvas id="canvas" style="display: none"></canvas>
-    </div>
+      <div class="img-box">
+          <video id="video" width="320" height="240" autoplay></video>
+          <canvas id="canvas" style="display:none;"></canvas>
+      </div>
+      
+      <div class="form-wrap">
+          <div class="top-signup">
+              <span>Don't you have an account?</span>
+              <button id="btnOpenCam" autoplay>Open WebCam</button>
+              <button id="capture" autoplay>Capture</button>
+              <button id="btnStopCam" autoplay>Stop</button>
+          </div>
+          <div class="mid-container">
+              <h1>Hello</h1>
+              <h6>Sign Up</h6>
+              <form class="form" method="post" id="signUpForm" >
+                  <label for="Username">Username</label></br>
+                  <input type="text" name="username" id="inpUsername" placeholder="Your Username"> 
+                  </br></br>
+                  <label for="email">Email</label></br>
+                  <input type="text" name="email" id="inpEmail" placeholder="Your Email">
+                  </br></br>
+                  <label for="phone">Phone</label></br>
+                  <input type="text" name="phone" id="inpPhone" placeholder="Your Phone">
+                  <br>
+                  <button id="btnSignUp" class="login-btn">Sign Up</button>
+              </form>
+              
+          </div>
+      </div>
   </div>
 </div>
-
 {% endblock %} {%block script %}
 <script
   type="text/javascript"
