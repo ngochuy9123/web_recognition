@@ -10,11 +10,8 @@
       </div>
       
       <div class="form-wrap">
-          <div class="top-signup">
+          <div class="top-signup" id="top-signup">
               <span>Don't you have an account?</span>
-              <button id="btnOpenCam" autoplay>Open WebCam</button>
-              <button id="capture" autoplay>Capture</button>
-              <button id="btnStopCam" autoplay>Stop</button>
           </div>
           <div class="mid-container">
               <h1>Hello</h1>
@@ -33,7 +30,31 @@
               </form>
               
           </div>
-      </div>
+
+            <div id="checkboxContainer" class="hidden">
+                <div>
+                    <input type="checkbox" id="thang" name="thang" value="0">
+                    <label for="thang">Nhin thang</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="trai" name="trai" value="1">
+                    <label for="trai">Ben Trai</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="phai" name="phai" value="2">
+                    <label for="phai">Ben Phai</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="tren" name="tren" value="3">
+                    <label for="tren">Nhin Tren</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="duoi" name="duoi" value="4">
+                    <label for="duoi">Nhin Duoi</label>
+                </div>
+            </div>
+        </div>
+      
   </div>
 </div>
 {% endblock %} {%block script %}

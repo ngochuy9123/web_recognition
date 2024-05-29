@@ -7,7 +7,7 @@ const inpUsername = document.getElementById("inpUsername");
 const inpEmail = document.getElementById("inpEmail");
 const inpPhone = document.getElementById("inpPhone");
 
-let faceDirection = 0;
+let faceDirectionCount = 0;
 const dictFaceDirec = {
   0: "Nhin Thang",
   1: "Quay Sang Phai",
@@ -40,6 +40,7 @@ async function insertAccount(event) {
     if (data.status == true) {
       alert("Account created successfully!");
       // Thực hiện các hành động tiếp theo, ví dụ: gọi hàm getVideo
+      hiddenFormSignUp();
       getVideo();
     } else {
       alert("Failed to create account.");
@@ -79,15 +80,21 @@ async function captureAndProcessImage() {
       console.log(data);
       if (data.status == true) {
         lstFaceDirection.push(data.faceDirection);
-        faceDirection += 1;
-        if (faceDirection >= 5) {
+        faceDirectionCount += 1;
+        let faceDirection = data.faceDirection;
+        if (faceDirectionCount >= 5) {
+          clickCheckBox(faceDirection);
+          displayFormSignUp();
           announceSuccess("success", "Dang Ki Thanh Cong");
           stopCamera(captureInterval, video);
+          lstFaceDirection = [];
+          faceDirectionCount = 0;
         } else {
           announceSuccess(
             "success",
             `Nhan huong ${dictFaceDirec[faceDirection]} thanh cong`
           );
+          clickCheckBox(faceDirection);
           // alert(dictFaceDirec[faceDirection]);
         }
       } else {
@@ -106,4 +113,36 @@ function stopCamera(captureInterval, video) {
     tracks.forEach((track) => track.stop());
     video.srcObject = null;
   }
+}
+
+function hiddenFormSignUp() {
+  const topSignUp = document.getElementById("top-signup");
+  const formSignUp = document.getElementById("signUpForm");
+  const checkboxContainer = document.getElementById("checkboxContainer");
+  topSignUp.classList.toggle("hidden");
+  formSignUp.classList.toggle("hidden");
+  checkboxContainer.classList.remove("hidden");
+}
+
+function displayFormSignUp() {
+  const topSignUp = document.getElementById("top-signup");
+  const formSignUp = document.getElementById("signUpForm");
+  const checkboxContainer = document.getElementById("checkboxContainer");
+  topSignUp.classList.remove("hidden");
+  formSignUp.classList.remove("hidden");
+
+  const lstFaceDirectionName = ["thang", "trai", "phai", "tren", "duoi"];
+  for (let i = 0; i < lstFaceDirectionName.length; i++) {
+    const checkbox = document.getElementById(lstFaceDirectionName[i]);
+    checkbox.checked = false;
+  }
+  checkboxContainer.classList.toggle("hidden");
+}
+
+function clickCheckBox(num) {
+  const lstFaceDirectionName = ["thang", "trai", "phai", "tren", "duoi"];
+  console.log(typeof lstFaceDirectionName[num]);
+  const checkbox = document.getElementById(lstFaceDirectionName[num]);
+  console.log(checkbox);
+  checkbox.click();
 }

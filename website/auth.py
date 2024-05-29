@@ -52,7 +52,7 @@ def signup1():
         return "No image part", 400
     file = request.files['image']
     lstFaceDirection = json.loads(request.form.get("lstFaceDirection"))
-    print(lstFaceDirection)
+    print(f"LIst lay tu JS {lstFaceDirection}")
     # direction = int(request.form.get("faceDirection")) 
     if file.filename == '':
         return "No selected file", 400
@@ -70,7 +70,8 @@ def signup1():
         faceDirection,status,message = detectDirectionFace(img,idUser,lstFaceDirection)
         if (status == True):
             lstFaceDirection.append(faceDirection)
-            print(lstFaceDirection)
+            print(f"List Tu Python: {lstFaceDirection}")
+
         response = {
             "faceDirection":faceDirection,
             "status":status,
@@ -181,12 +182,13 @@ def detectDirectionFace(img,id,lstFaceDirection):
     required_directions = {0, 1, 2}
     if required_directions.issubset(lstFaceDirection):
         pitch_angle = calculate_pitch(landmarks)
-        if pitch_angle < 89:
+        if pitch_angle < 90.5:
             dir_face = 3
-        elif pitch_angle > 89:
+        elif pitch_angle > 90.5:
             dir_face = 4
         else:
             dir_face = 5
+        print(f"Voi pitch_angel: {pitch_angle} thi dang la {dir_face}")
     if dir_face not in lstFaceDirection:
         status = True
         message = "Huong khuon mat chua ton tai, Bat dau luu Hinh Anh"
