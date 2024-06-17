@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+<title>{% block title %}Sign In{% endblock %}</title>
+{% block content %}
+<div class="main-wrap">
+  <div class="box-container">
+    <div class="img-box">
+      <img src="" alt="" id="img_cam" />
+    </div>
+
+    <div class="form-wrap">
+      <div class="top-signup">
+        <button
+          class="openCam"
+          value="rtsp://admin:1NgocMai@192.168.1.12:554/Streaming/Channels/101"
+        >
+          Home Huy
+        </button>
+        <br />
+        <button class="openCam" value="">Home Loi</button>
+      </div>
+      <div class="mid-container">
+        <div class="info_recog">
+          <h2>Recognized Persons</h2>
+          <ul id="persons_list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {%block script %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='recog_cam.js')}}"
+></script>
+{%endblock%}

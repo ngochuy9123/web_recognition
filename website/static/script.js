@@ -66,3 +66,7 @@ btnStopCam.addEventListener("click", () => {
     video.srcObject = null;
   }
 });
+
+document.getElementById("signUpBtn").addEventListener("click", function () {
+  window.location.href = "/signup";
+});

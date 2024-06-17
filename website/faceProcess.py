@@ -117,15 +117,25 @@ def detectFaceDirectionUD(landmarks):
         res = 5
     return res
 
-def recognitionFaceWithInsight():
-    print("Face Recognition Start ...")
-    
-    print("Face Recognitin End ...")
+def recognitionFaceWithInsight(img):
+    userid = 0
+    status = 0
+    img = img_process(img)
+    results_sc = app_sc.get(img)
+    for res in results_sc:
+        emmbeddings = res['embedding']
+        person_name = ml_search_algorithm(dataframe, "Facial_Features", test_vector=emmbeddings, name=["Name"],thresh=0.5)
+        if str(person_name) == "Unknown":
+            userid = 0
+            status = 0
+        else:
+            userid = int(person_name)
+            status = 1
+
+    return userid,status
 
 def imgProcess(img):
-    print("Img Process Start ...")
-
-    print("Img Process End ...")
+    print("Image Process")
 
 
 def npAngle(a, b, c):

@@ -79,7 +79,21 @@ async function captureAndProcessImage() {
       const data = await response.json();
       console.log(data);
       if (data.status == true) {
-        lstFaceDirection.push(data.faceDirection);
+        // Kiem soat khi them thang, trai-phai, tren-duoi
+        if (lstFaceDirection.length < 1) {
+          if (data.faceDirection == 0) {
+            lstFaceDirection.push(data.faceDirection);
+          }
+        } else if (lstFaceDirection.length > 0 && lstFaceDirection < 3) {
+          if (data.faceDirection == 1 || data.faceDirection == 2) {
+            lstFaceDirection.push(data.faceDirection);
+          }
+        } else if (lstFaceDirection.length > 2 && lstFaceDirection < 5) {
+          if (data.faceDirection == 3 || data.faceDirection == 4) {
+            lstFaceDirection.push(data.faceDirection);
+          }
+        }
+        //
         faceDirectionCount += 1;
         let faceDirection = data.faceDirection;
         if (faceDirectionCount >= 5) {
@@ -98,6 +112,11 @@ async function captureAndProcessImage() {
           // alert(dictFaceDirec[faceDirection]);
         }
       } else {
+        if (data.message != null) {
+          displayFormSignUp();
+          announceSuccess("error", data.message);
+          stopCamera(captureInterval, video);
+        }
         console.log("Chua dung huong khuon mat");
       }
     } catch (error) {

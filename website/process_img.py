@@ -71,8 +71,6 @@ def img_process(img):
     return img
 
 
-
-
 def face_recog_by_insightface(img):
     userid = 0
     status = 0
@@ -85,6 +83,7 @@ def face_recog_by_insightface(img):
         person_name = ml_search_algorithm(dataframe, "Facial_Features", test_vector=emmbeddings, name=["Name"],thresh=0.5)
         if str(person_name) == "Unknown":
             userid = 0
+            status = 0
         else:
             userid = int(person_name)
             status = 1

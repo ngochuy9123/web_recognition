@@ -12,7 +12,7 @@ from insightface.app import FaceAnalysis
 import pandas as pd
 from sklearn.metrics import pairwise
 import json
-from .faceProcess import app_sc, detectFaceDirection,dataframe,updateDataframe
+from .faceProcess import app_sc, detectFaceDirection,dataframe,updateDataframe,recognitionFaceWithInsight
 
 
 auth = Blueprint('auth',__name__)
@@ -65,18 +65,30 @@ def signup1():
         status = False
 
         print(f"Face Direction: {resultFaceDirection}")
-        if resultFaceDirection not in lstFaceDirection and resultFaceDirection > -1:
-            status = True
-            checkSuccessSignUp(lstFaceDirection)
+        if resultFaceDirection == 0:
+            id, status_recog_face = recognitionFaceWithInsight(img)
+            if status_recog_face == 1:
+                response = {
+                    "faceDirection":resultFaceDirection,
+                    "status":False,
+                    "lstFaceDirection":lstFaceDirection,
+                    "message":"Khuon mat da ton tai",
+                }
+                return jsonify(response)
+            else:
+                if resultFaceDirection not in lstFaceDirection and resultFaceDirection > -1:
+                    status = True
+                    checkSuccessSignUp(lstFaceDirection)
 
-        print(f"List Tu Python: {lstFaceDirection}")
-        print(f"Status: {status}")
-        response = {
-            "faceDirection":resultFaceDirection,
-            "status":status,
-            "lstFaceDirection":lstFaceDirection
-        }
-        return jsonify(response)
+                print(f"Status: {status}")
+                response = {
+                    "faceDirection":resultFaceDirection,
+                    "status":status,
+                    "lstFaceDirection":lstFaceDirection
+                }
+                return jsonify(response)
+
+        
     return "Failed to save image", 500
 
 def faceForSignUp(img,id,lstFaceDirection):

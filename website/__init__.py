@@ -17,9 +17,11 @@ def create_app():
     from .views import views
     from .auth import auth
     from .process_img import process_img
+    from .video_cam import video_cam
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(process_img, url_prefix='/')
+    app.register_blueprint(video_cam, url_prefix='/')
 
     return app

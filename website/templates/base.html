@@ -10,6 +10,26 @@
     />
   </head>
   <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <a href="/">
+            <img
+              src="https://png.pngtree.com/element_pic/16/11/02/bd886d7ccc6f8dd8db17e841233c9656.jpg"
+              alt="Logo"
+            />
+          </a>
+        </div>
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="/">Sign In</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/face_recog_cam">Face Recognition Cam</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
     <div class="container">{% block content %}Home{% endblock %}</div>
 
     {% block script %}
