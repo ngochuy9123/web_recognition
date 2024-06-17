@@ -66,6 +66,8 @@ def updateDataframe():
  
 
 def ml_search_algorithm(dataframe, feature_column, test_vector, name=["Name"], thresh=0.5):
+    # if len(dataframe)<1:
+
     dataframe = dataframe.copy()
     X_list = dataframe[feature_column].tolist()
     x=np.asarray(X_list)

@@ -13,7 +13,7 @@ import pandas as pd
 from sklearn.metrics import pairwise
 import json
 from .faceProcess import app_sc, detectFaceDirection,dataframe,updateDataframe,recognitionFaceWithInsight
-
+import shutil
 
 auth = Blueprint('auth',__name__)
 
@@ -65,28 +65,38 @@ def signup1():
         status = False
 
         print(f"Face Direction: {resultFaceDirection}")
-        if resultFaceDirection == 0:
-            id, status_recog_face = recognitionFaceWithInsight(img)
-            if status_recog_face == 1:
-                response = {
-                    "faceDirection":resultFaceDirection,
-                    "status":False,
-                    "lstFaceDirection":lstFaceDirection,
-                    "message":"Khuon mat da ton tai",
-                }
-                return jsonify(response)
-            else:
-                if resultFaceDirection not in lstFaceDirection and resultFaceDirection > -1:
-                    status = True
-                    checkSuccessSignUp(lstFaceDirection)
+        if len(lstFaceDirection) == 0:
+            if resultFaceDirection == 0 :
+                id, status_recog_face = recognitionFaceWithInsight(img)
+                if status_recog_face == 1:
+                    directory_path = f"website/images/{idUser}"
+                    remove_directory(directory_path)
+                    response = {
+                        "faceDirection":resultFaceDirection,
+                        "status":False,
+                        "lstFaceDirection":lstFaceDirection,
+                        "message":"Khuon mat da ton tai",
+                    }
+                    return jsonify(response)
+                else:
+                    response = {
+                        "faceDirection":resultFaceDirection,
+                        "status":True,
+                        "lstFaceDirection":lstFaceDirection
+                    }
+                    return jsonify(response)
+        else:  
+            if resultFaceDirection not in lstFaceDirection and resultFaceDirection > -1:
+                status = True
+                checkSuccessSignUp(lstFaceDirection)
 
-                print(f"Status: {status}")
-                response = {
-                    "faceDirection":resultFaceDirection,
-                    "status":status,
-                    "lstFaceDirection":lstFaceDirection
-                }
-                return jsonify(response)
+            print(f"Status: {status}")
+            response = {
+                "faceDirection":resultFaceDirection,
+                "status":status,
+                "lstFaceDirection":lstFaceDirection
+            }
+            return jsonify(response)
 
         
     return "Failed to save image", 500
@@ -94,6 +104,9 @@ def signup1():
 def faceForSignUp(img,id,lstFaceDirection):
     print("Detect Direction Face Start ...")
     dir_face= detectFaceDirection(img,lstFaceDirection)
+    if len(lstFaceDirection) < 1:
+        if dir_face != 0:
+            return dir_face
     
     if dir_face not in lstFaceDirection:
         saveImage(img,id,dir_face)
@@ -107,6 +120,13 @@ def saveImage(img,id,directionFace):
     filename = f"{directionFace}.png"
     
     cv2.imwrite(os.path.join(folderName, filename),img)
+
+def remove_directory(directory_path):
+    if os.path.exists(directory_path) and os.path.isdir(directory_path):
+        shutil.rmtree(directory_path)
+        print(f"Removed directory: {directory_path}")
+    else:
+        print(f"Directory does not exist or is not a directory: {directory_path}")
 
 def getIdLastest():
     cur = mysql.connection.cursor()
